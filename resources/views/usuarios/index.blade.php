@@ -29,14 +29,22 @@
 
                         <div id="linhaPesquisa">
                             <div class="form-group row">
+                                <form action="{{ route('usuarios.pesquisar') }}">
                                     <label for="inputPassword" class="col-sm-1 col-form-label"  style="margin-top:7px;">Usuario</label>
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control" id="inputPassword" placeholder="Digite o ID do usuario">
-                                </div>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control" name='id' id="inputID" placeholder="Digite o ID do usuario">
+                                    </div>
 
-                                <div class="col-sm-3">
-                                    <button type='submit' class='btn btn-secondary'>Pesquisar</button>
-                                </div>
+                                    <div class="col-sm-1">
+                                        <button type='submit' class='btn btn-secondary'>Pesquisar</button>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        @if(!empty($_GET['id']))
+                                        <a href="{{ route('usuarios.index') }}"><button type='button' class='btn btn-primary'>Listar todos</button></a>
+                                        @endif
+                                    </div>
+                                </form>
                             </div>                              
                         </div>
 
@@ -123,8 +131,8 @@
                                         <td colspan=2>
                                             <a href="{{ route('usuarios.editar', $usuarios->id) }}"><img src="{!! asset('imagem/editarUserIcon.png') !!}" id='editarIcon' style="display:none;margin-bottom:10px"></a></br>
                                             <a href="{{ route('usuarios.editar', $usuarios->id) }}" id='editarButton' class='btn btn-primary'>Editar</a>
-                                            <a href="{{ route('usuarios.deletar', $usuarios->id) }}"><img src="{!! asset('imagem/deletarIcon.png') !!}" id='deletarIcon' style="display:none;"></a>
-                                            <a href="{{ route('usuarios.deletar', $usuarios->id) }}" id='deletarButton'  class='btn btn-danger'>Deletar</a>
+                                            <a href="javascript:(confirm('Deletar esse registro?') ? window.location.href='{{route('usuarios.deletar', $usuarios->id)}}' : false)"><img src="{!! asset('imagem/deletarIcon.png') !!}" id='deletarIcon' style="display:none;"></a>
+                                            <a href="javascript:(confirm('Deletar esse registro?') ? window.location.href='{{route('usuarios.deletar', $usuarios->id)}}' : false)" id='deletarButton'  class='btn btn-danger'>Deletar</a>
                                         </td>
                                         
                                         @else
@@ -139,8 +147,8 @@
                                                 <a href="{{ route('gerarToken' , $usuarios->id) }}" id='keyButton' class='btn btn-success'>Gerar Token</a>
                                                 <a href="{{ route('gerarToken' , $usuarios->id) }}"><img src="{!! asset('imagem/addKeyIcon.png') !!}" id='addKeyIcon' style="display:none;"></a>
                                                 <a href="{{ route('usuarios.editar', $usuarios->id) }}" id='editarButton' class='btn btn-primary'>Editar</a><br id='quebraLinha' style="display:none">
-                                                <a href="{{ route('usuarios.deletar', $usuarios->id) }}"><img src="{!! asset('imagem/deletarIcon.png') !!}" id='deletarIcon' style="display:none;"></a>
-                                                <a href="{{ route('usuarios.deletar', $usuarios->id) }}" id='deletarButton' class='btn btn-danger'>Deletar</a>
+                                                <a href="javascript:(confirm('Deletar esse registro?') ? window.location.href='{{route('usuarios.deletar', $usuarios->id)}}' : false)"><img src="{!! asset('imagem/deletarIcon.png') !!}" id='deletarIcon' style="display:none;"></a>
+                                                <a href="javascript:(confirm('Deletar esse registro?') ? window.location.href='{{route('usuarios.deletar', $usuarios->id)}}' : false)" id='deletarButton' class='btn btn-danger'>Deletar</a>
                                             </td>
 
                                         @endif     
@@ -154,6 +162,12 @@
 
                             </tbody>
                         </table>
+
+                        @if(empty($_GET['id']))
+                        <div align="center">
+                        {!! $registros->links() !!}
+                        </div> 
+                        @endif
 
                 </div>
             </div>

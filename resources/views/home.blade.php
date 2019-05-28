@@ -125,7 +125,7 @@
                     @endif
 
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-12">                            
                             <img src="{!! asset('imagem/dataIcon.png') !!}" width=22> <span>{{ $dataAtual}}</span>
                         </div>
                     </div>

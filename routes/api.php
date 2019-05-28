@@ -19,7 +19,9 @@ use Illuminate\Http\Request;
 
 
 Route::group(['middleware'=>['auth:api']], function(){
+    //Route::resource('testeJson', 'testeJson');
 
-    
 });
+
+Route::resource('testeJson', 'testeJson');
 Route::resource('user', 'UserController');

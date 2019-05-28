@@ -14,19 +14,19 @@
 
                     <div class="form-group">
                         <label for="Nome">Nome</label>
-                        <input type="text" class="form-control" name='name' id="nomeInput" placeholder="Digite o nome do usuário">
+                        <input type="text" class="form-control" name='name' id="nomeInput" placeholder="Digite o nome do usuário" required>
                     </div>
                     <div class="form-group">
                         <label for="Descrição">Email</label>
-                        <input type="text" class="form-control" name='email' id="emailInput" placeholder="Digite o E-mail do usuário">
+                        <input type="email" class="form-control" name='email' id="emailInput" placeholder="Digite o E-mail do usuário" required>
                     </div>
                     <div class="form-group">
                         <label for="senha">Senha</label>
-                        <input type="password" class="form-control" name='password' id="senhaInput" placeholder="Digite a senha">                            
+                        <input type="password" class="form-control" name='password' id="senhaInput" placeholder="Digite a senha" required>                            
                     </div>
                     <div class="form-group">
                         <label for="Avaliação">Confirme a senha</label>
-                        <input type="password" class="form-control" name='confirm_password' id="avaliacaoInput" placeholder="Digite a senha novamente">                            
+                        <input type="password" class="form-control" name='confirm_password' id="validacaoInput" placeholder="Digite a senha novamente" required>                            
                     </div>
                     
                     <div class="col-12 text-center">

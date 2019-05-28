@@ -40,13 +40,18 @@ class HomeController extends Controller
 
         $chaves = count($registrosToken);
 
-        $dataAtual = \App\User::find($id);
+        $dataAtual = \App\User::find($id);  
+        //dd($dataAtual->ultimo_acesso);
 
-        $dataBd= $dataAtual->ultimo_acesso;
-
-        $dataInt = strtotime($dataBd);
-
-        $dataAtual = date('d-m-Y h:i:s', $dataInt);
+        if($dataAtual->ultimo_acesso != null){
+            $dataBd= $dataAtual->ultimo_acesso;
+            
+            $dataInt = strtotime($dataBd);
+            
+            $dataAtual = date('d-m-Y h:i:s', $dataInt);
+        }else{
+            $dataAtual = 'Primeiro acesso';
+        }
         
         
         return view('home', compact('usuarios', 'chaves', 'dataAtual'));

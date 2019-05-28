@@ -32,8 +32,7 @@ class UserController extends Controller
     public function index()
     {
         //Pega todos usuarios da tabela users
-        $registros = \App\User::all();
-
+        $registros = \App\User::paginate(4);
         
         //Retorna para o index passando os usuarios buscado
         //return response()->json(['data' => $registros]);
@@ -87,7 +86,7 @@ class UserController extends Controller
         }else{
             //Mensagem de erro
             \Session::flash('flash_message',[
-                'msg' => 'Token não foi possivel gerar',
+                'msg' => 'Token não foi possivel ser gerar',
                 'class' => 'alert-danger'
             ]);
     
@@ -129,8 +128,8 @@ class UserController extends Controller
 
             //Mensagem de erro
             \Session::flash('flash_message',[
-                'msg' => 'Deletado com sucesso',
-                'class' => 'alert-success'
+                'msg' => 'Erro ao deletar Token',
+                'class' => 'alert-danger'
             ]);
     
             //Retorna para view
@@ -163,8 +162,22 @@ class UserController extends Controller
         $validatedData =  array(
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6',
+            'password' => 'required|string|min:3',
         );
+
+        //Pega tamanho da string
+        $passwordTamanho = strlen($request->password);
+        
+        if($passwordTamanho <= 2){
+            //Mensagem de erro
+            \Session::flash('flash_message',[
+                "msg" => "Senhas deve ser maior que dois caracteres",
+                "class" => "alert-danger"
+            ]);
+            
+            //Retorna para View
+            return redirect()->route('usuarios.adicionar');
+        }        
 
         //Verifica se aas senhas são iguais
         if($request->password != $request->confirm_password){
@@ -187,7 +200,7 @@ class UserController extends Controller
 
             //Mensagem de erro
             \Session::flash('flash_message',[
-                "msg" => "Existem campos vazio",
+                "msg" => "Verifique se existem campos vazios ou se o email já existe",
                 "class" => "alert-danger"
             ]);
 
@@ -278,6 +291,24 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        //Array das requisição
+        $dadosInput = array(
+            'nome' => $request->name,
+            'email' => $request->email,
+        );
+
+        //Verifica se os campos estão vazios
+        foreach($dadosInput as $key => $value){
+            if(empty($value)){
+                \Session::flash('flash_message', [
+                    'msg' => 'Campo ' .$key.' não pode ser vazio',
+                    'class' => 'alert-danger'
+                ]);
+                //Retorna para rota
+                return redirect()->route("usuarios.editar" , $id);
+            }
+        }
+
         //Pega o usuario pelo ID
         $registro = UserController::getUsuario($id);
         
@@ -292,7 +323,13 @@ class UserController extends Controller
             return redirect()->route("usuarios.index");
         }else{
             //Atualiza o banco pela requisição
-            \App\User::find($id)->update($request->all());
+            $user = $registro;
+            $user->name = $request->name;
+            $user->email = $request->email;
+            if($request->password != null){
+                $user->password = bcrypt($request->password);
+            }
+            $user->save();
 
             //Retorna mensagem de sucesso
             \Session::flash('flash_message', [
@@ -304,7 +341,7 @@ class UserController extends Controller
         }
     }
 
-    /**
+    /**yt
      * Remove the specified resource from storage.
      *
      * @param  int  $id
@@ -317,7 +354,7 @@ class UserController extends Controller
             //Apaga o registro
             \App\User::destroy($id);
 
-            //Mensagem de sucesso
+            //Mensagem de sucesso   
             \Session::flash('flash_message', [
                 'msg' => 'Usuario deletado com sucesso',
                 'class' => 'alert-success'

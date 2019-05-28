@@ -20,82 +20,34 @@
 
 <style>
 
-a:hover{
-    background:white!important;
-    color:black!important;
+#menuIcon {
+    position: relative;
+    margin-right: 15px;
+    padding: 9px 10px;
+    margin-bottom: 8px;
+    background-color: transparent;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+   
 }
 
-@media (max-width: 800px) 
-{
-    #linhaAcoes{
-        text-align: center;
-        margin-top: 25px;
-    }
-    #buttonTitle
-    {
-        display:none ;
-    }
 
-    #addIcon
-    {
-        display:inherit!important ;
-        margin-top: 7px;
-        cursor:pointer;
-        float:right
-    }
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+@media (max-width: 520px) 
+{
     
-    #linhaPesquisa{
-        
+    #menuLarge{
         display:none
     }
 
-    #pesquisarIcon{
-        
-        display:inherit!important;
-        margin-top: 7px;
-        cursor:pointer;
-        float:right;
-        margin-right:10px;
-
+    #dropMenu{
+        display:inherit!important
     }
-
-    #titleUser{
-        margin-left: 57px;
-    }
-}
-
-@media (max-width: 755px) 
-{
-    #editarButton{
-        display: none;
-    }
-
-    #editarIcon{
-        display: inherit!important;
-    }
-
-    #deletarButton{
-        display: none;
-    }
-
-    #deletarIcon{
-        display: inherit!important;
-    }
-
-    #quebraLinha{
-        display:inherit!important;
-    }
-
-    #keyButton{
-        display:none;
-    }
-
-    #addKeyIcon{
-        display: inherit!important;
-        margin-top:10px;
-        margin-bottom:10px;
-    }
-
 }
 
 
@@ -120,14 +72,45 @@ a:hover{
                     
 
                     @if(Auth::check())
+                    
+                    <div class="menu" id="menuLarge">
+                        <a class="navbar-brand" href="{{ url('/home') }}"  style="color:white;letter-spacing: 2px;">
+                            DashBoard
+                        </a>
 
-                    <a class="navbar-brand" href="{{ url('/home') }}"  style="color:white;letter-spacing: 2px;">
-                        DashBoard
-                    </a>
+                        <a class="navbar-brand" href="{{ route('usuarios.index') }}"  style="color:white;letter-spacing: 2px;">
+                            Usuarios
+                        </a>
 
-                    <a class="navbar-brand" href="{{ route('usuarios.index') }}"  style="color:white;letter-spacing: 2px;">
-                        Usuarios
-                    </a>
+                        <a class="navbar-brand" href="http://192.168.1.214:8086/WebServiceMsv/public/api/testeJson/"  style="color:white;letter-spacing: 2px;">
+                            Teste Api
+                        </a>
+                    </div>
+
+
+            <div class="pos-f-t" id="dropMenu" style='display:none'>
+
+                <img id="menuIcon" src="{!! asset('imagem/menuIcon.png') !!}" class="navbar-toggler" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Alterna navegação">
+                <div class="collapse" id="navbarToggleExternalContent">
+                    <HR>
+
+                    <div class="p-4">
+                        <a class="navbar-brand" href="{{ url('/home') }}"  style="color:white;letter-spacing: 2px;">
+                            DashBoard
+                        </a>
+
+                        <a class="navbar-brand" href="{{ route('usuarios.index') }}"  style="color:white;letter-spacing: 2px;">
+                            Usuarios
+                        </a>
+
+                        <a class="navbar-brand" href="http://192.168.1.214:8086/WebServiceMsv/public/api/testeJson/"  style="color:white;letter-spacing: 2px;">
+                            Teste Api
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+
                     @endif
 
                 </div>
@@ -152,17 +135,17 @@ a:hover{
 
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a id='logout' href="#"
+                                        <a id='logout' style="color:black"  href="#"
                                             onclick="event.preventDefault();
                                                     document.getElementById('logout-form').submit();">
-                                            Logout
+                                            Sair
 
                                             
                                         </a>
 
-                                        <form id="logout-form" action="{{ route('logout') }}" id='logout' method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>
+										<form id="logout-form" action="{{ route('logout') }}" id='logout' method="POST" style="display: none;">
+											{{ csrf_field() }}
+										</form>
                                     </li>
                                 </ul>
                             </li>
@@ -185,6 +168,8 @@ a:hover{
         @endif
         
         @yield('content')
+
+        
         @extends('layouts.modalPesquisar')
 
 
@@ -214,7 +199,13 @@ a:hover{
                     }
                 });
             });
+
+
+            
+            
         });
+
+        
     
     </script>
 </body>

@@ -26,6 +26,11 @@
                         <label for="Descrição">Email</label>
                         <input type="text" class="form-control" value='{{ $registro->email }}' name='email' id="emailInput" placeholder="Digite o E-mail do usuário">
                     </div>
+
+                    <div class="form-group">
+                        <label for="Senha">Nova Senha</label>
+                        <input type="password" class="form-control"  name='password' id="passwordInput" placeholder="Digite sua nova senha">
+                    </div>
                                         
                     <div class="col-12 text-center">
                         <button type="submit" class="btn btn-primary">Editar</button>
